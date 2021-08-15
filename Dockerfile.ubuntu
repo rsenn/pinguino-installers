@@ -1,0 +1,24 @@
+FROM python:3.7-slim as build
+
+ENV LANG=C LC_ALL=C LANGUAGE=C TERM=rxvt LOCALE=C
+
+#RUN ln -svf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
+#RUN apt-get update
+#RUN apt-get install -y bash curl
+#RUN apt-get update 
+#RUN apt-get install -y gnupg
+#RUN echo "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu bionic main" > /etc/apt/sources.list.d/python-deadsnakes.list
+#RUN bash -c 'echo -e "-----BEGIN PGP PUBLIC KEY BLOCK-----\nComment: Hostname: \nVersion: Hockeypuck ~unreleased\n\nxsFNBFl8fYEBEADQmGZ6pDrwY9iH9DVlwNwTOvOZ7q7lHXPl/TLfMs1tckMc/D9a\nhsdBN9VWtMmo+RySvhkIe8X15r65TFs2HE8ft6j2e/4K472pObM1hB+ajiU/wYX2\nSyq7DBlNm6YMP5/SyQzRxqis4Ja1uUjW4Q5/Csdf5In8uMzXj5D1P7qOiP2aNa0E\nr3w6PXWRTuTihWZOsHv8npyVYDBRR6gEZbd3r86snI/7o8Bfmad3KjbxL7aOdNMw\nAqQFaNKl7Y+UJpv1CNFIf+twcOoC0se1SrsVJlAH9HNHM7XGQsPUwpNvQlcmvr+t\n1vVS2m72lk3gyShDuJpi1TifGw+DoTqu54U0k+0sZm4pnQVeiizNkefU2UqOoGlt\n4oiG9nIhSX04xRlGes3Ya0OjNI5b1xbcYoR+r0c3odI+UCw3VSZtKDX/xlH1o/82\nb8ouXeE7LA1i4DvGNj4VSvoxv4ggIznxMf+PkWXWKwRGsbAAXF52rr4FUaeaKoIU\nDkJqHXAxrB3PQslZ+ZgBEukkQZF76NkqRqP1E7FXzZZMo2eEL7vtnhSzUlanOf42\nECBoWHVoZQaRFMNbGpqlg9aWedHGyetMStS3nH1sqanr+i4I8VR/UH+ilarPTW3T\nE0apWlsH8+N3IKbRx2wgrRZNoQEuyVtvyewDFYShJB3Zxt7VCy67vKAl1QARAQAB\nzRxMYXVuY2hwYWQgUFBBIGZvciBkZWFkc25ha2VzwsF4BBMBAgAiBQJZfH2BAhsD\nBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRC6aTI2anVXdvwhD/4oI3yckeKn\n9aJNNTJsyw4ydMkIAOdG+jbZsYv/rN73UVQF1RA8HC71SDmbd0Nu80koBOX+USuL\nvvhoMIsARlD5dLx5f/zaQcYWJm/BtsMF/eZ4s1xsenwW6PpXd8FpaTn1qtg/8+O9\n99R4uSetAhhyf1vSRb/8U0sgSQd38mpZZFq352UuVisXnmCThj621loQubYJ3lwU\nLSLs8wmgo4XIYH7UgdavV9dfplPh0M19RHQL3wTyQP2KRNRq1rG7/n1XzUwDyqY6\neMVhdVhvnxAGztvdFCySVzBRr/rCw6quhcYQwBqdqaXhz63np+4mlUNfd8Eu+Vas\nb/tbteF/pDu0yeFMpK4X09Cwn2kYYCpq4XujijW+iRWb4MO3G8LLi8oBAHP/k0CM\n/QvSRbbG8JDQkQDH37Efm8iE/EttJTixjKAIfyugmvEHfcrnxaMoBioa6h6McQrM\nvI8bJirxorJzOVF4kY7xXvMYwjzaDC8G0fTA8SzQRaShksR3USXZjz8vS6tZ+YNa\nmRHPoZ3Ua0bz4t2aCcu/fknVGsXcNBazNIK9WF2665Ut/b7lDbojXsUZ3PpuqOoe\nGQL9LRj7nmCI6ugoKkNp8ZXcGJ8BGw37Wep2ztyzDohXp6f/4mGgy2KYV9R4S8D5\nyBDUU6BS7Su5nhQMStfdfr4FffLmnvFC9w==\n=s7P2\n-----END PGP PUBLIC KEY BLOCK-----" | apt-key add -'
+#RUN apt-get update 
+##RUN apt-cache search py.*pip
+#RUN apt-get install -y unzip make git python3.7-full python3.7-venv
+##RUN apt-get remove -y python3.6-full python3.6-venv
+#RUN apt-get install -y python3-pip
+RUN pip install pipenv
+
+RUN git clone -b master https://github.com/PinguinoIDE/pinguino-installers  /tmp/pinguino-installers
+RUN mv -f /tmp/pinguino-installers /work
+WORKDIR /work/linux
+VOLUME /work
+
+CMD sh

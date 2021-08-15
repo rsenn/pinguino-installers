@@ -1,13 +1,14 @@
-FROM alpine as build
+FROM python:3.7-slim as build
 
-RUN apk update && apk add bash curl make git py3-pip py3-virtualenv
-#ENV VERSION=2021-07-24
-RUN git clone -b master https://github.com/PinguinoIDE/pinguino-installers  /tmp/pinguino-installers 
-#RUN cd /tmp && cd pinguino-installers/linux && sh  installer-v2.sh
-##RUN mkdir /work && cp -rvf /linux/* /work
-#ADD ./linux /linux
-RUN cp -rvf /tmp/pinguino-installers /work
-WORKDIR /linux
-VOLUME /linux
+ENV LANG=C LC_ALL=C LANGUAGE=C TERM=rxvt LOCALE=C
 
-CMD sh
+RUN apt-get update
+RUN apt-get install -y bash vim-nox curl make git python3-venv python3-pip
+RUN pip install pipenv
+
+RUN git clone -b master https://github.com/PinguinoIDE/pinguino-installers  /tmp/pinguino-installers
+RUN mkdir -p /work && mv -f /tmp/pinguino-installers/* /work/
+WORKDIR /work/linux
+VOLUME /work
+
+CMD bash --login
